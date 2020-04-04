@@ -21,7 +21,6 @@ probabilities = [count / sum(countTable) for count in countTable]
 # Uncertainty of the temperature
 
 tempProbabilities = []
-#tempProbabilities[5] = a  --> a is the probability of 2 degrees happening
 
 for tempreture in range(-3,29):
 	tempTotal = 0
@@ -52,6 +51,35 @@ for month in range(1,13):
 
 print("Joint entropy of temperature and month: ")
 print(str(jointEntholpy) + " bits")
+
+
+# Correlation between temperature and month
+
+monthProbabilities = []
+
+for month in range(1,13):
+	monthTotal = 0
+	for i in range(130):
+		if(month == months[i]):
+			monthTotal +=  probabilities[i]
+	monthProbabilities.append(monthTotal)
+
+muturalInformation = 0
+
+
+for month in range(1,13):
+	for tempreture in range(-3,29):
+		for i in range(130):
+			if month==months[i] and tempreture==temp[i]:
+				pxpy =monthProbabilities[month-1]*tempProbabilities[tempreture+3]
+				muturalInformation += probabilities[i]*math.log2(probabilities[i]/pxpy)
+
+print("Correlation between temperature and month: ")
+print(str(muturalInformation) + " bits")
+
+
+
+
 
 
 
